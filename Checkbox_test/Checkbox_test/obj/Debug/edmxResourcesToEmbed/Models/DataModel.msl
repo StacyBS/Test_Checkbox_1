@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MVCUseModelStoreContainer" CdmEntityContainer="MVCUseEntities">
+    <EntitySetMapping Name="droplistItem">
+      <EntityTypeMapping TypeName="MVCUseModel.droplistItem">
+        <MappingFragment StoreEntitySet="droplistItem">
+          <ScalarProperty Name="TypeItem" ColumnName="TypeItem" />
+          <ScalarProperty Name="TypePath" ColumnName="TypePath" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TestData_chk_droplist">
+      <EntityTypeMapping TypeName="MVCUseModel.TestData_chk_droplist">
+        <MappingFragment StoreEntitySet="TestData_chk_droplist">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Names" ColumnName="Names" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="TypeItem" ColumnName="TypeItem" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

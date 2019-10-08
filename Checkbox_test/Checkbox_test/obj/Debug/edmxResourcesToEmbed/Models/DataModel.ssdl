@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCUseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="droplistItem">
+    <Key>
+      <PropertyRef Name="TypeItem" />
+    </Key>
+    <Property Name="TypeItem" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="TypePath" Type="varchar" MaxLength="20" />
+  </EntityType>
+  <EntityType Name="TestData_chk_droplist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Names" Type="varchar" MaxLength="10" />
+    <Property Name="Content" Type="varchar" MaxLength="10" />
+    <Property Name="TypeItem" Type="varchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_PersonOrder">
+    <End Role="droplistItem" Type="Self.droplistItem" Multiplicity="0..1" />
+    <End Role="TestData_chk_droplist" Type="Self.TestData_chk_droplist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="droplistItem">
+        <PropertyRef Name="TypeItem" />
+      </Principal>
+      <Dependent Role="TestData_chk_droplist">
+        <PropertyRef Name="TypeItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCUseModelStoreContainer">
+    <EntitySet Name="droplistItem" EntityType="Self.droplistItem" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TestData_chk_droplist" EntityType="Self.TestData_chk_droplist" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_PersonOrder" Association="Self.FK_PersonOrder">
+      <End Role="droplistItem" EntitySet="droplistItem" />
+      <End Role="TestData_chk_droplist" EntitySet="TestData_chk_droplist" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

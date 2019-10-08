@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="MVCUseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="droplistItem">
+    <Key>
+      <PropertyRef Name="TypeItem" />
+    </Key>
+    <Property Name="TypeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="TypePath" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="TestData_chk_droplist" Relationship="Self.FK_PersonOrder" FromRole="droplistItem" ToRole="TestData_chk_droplist" />
+  </EntityType>
+  <EntityType Name="TestData_chk_droplist">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Names" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="Content" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="TypeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="droplistItem" Relationship="Self.FK_PersonOrder" FromRole="TestData_chk_droplist" ToRole="droplistItem" />
+  </EntityType>
+  <Association Name="FK_PersonOrder">
+    <End Role="droplistItem" Type="Self.droplistItem" Multiplicity="0..1" />
+    <End Role="TestData_chk_droplist" Type="Self.TestData_chk_droplist" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="droplistItem">
+        <PropertyRef Name="TypeItem" />
+      </Principal>
+      <Dependent Role="TestData_chk_droplist">
+        <PropertyRef Name="TypeItem" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="MVCUseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="droplistItem" EntityType="Self.droplistItem" />
+    <EntitySet Name="TestData_chk_droplist" EntityType="Self.TestData_chk_droplist" />
+    <AssociationSet Name="FK_PersonOrder" Association="Self.FK_PersonOrder">
+      <End Role="droplistItem" EntitySet="droplistItem" />
+      <End Role="TestData_chk_droplist" EntitySet="TestData_chk_droplist" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

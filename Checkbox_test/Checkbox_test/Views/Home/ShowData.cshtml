@@ -1,0 +1,86 @@
+﻿@model Checkbox_test.ViewModel.SourceDataView
+@{
+    ViewBag.Title = "ShowData";
+}
+<script src="~/Scripts/jquery-1.10.2.min.js"></script>
+<script>
+    $().ready(function () {
+        var chk = function () {
+            var list = [];
+            $('table tr').each(function (i) {
+                var $chkbox = $(this).find('input[type="checkbox"]');
+                if ($chkbox.length) {
+                    var status = $chkbox.prop('checked');
+                    var dropVal = $('#Type' + i.toString()).find('option:selected').val();
+
+                    if (status) {
+                        console.log('Table row ' + $chkbox.val() + ' contains a checkbox with a checked status of: ' + status + ' ; ' + dropVal);
+
+                        list.push({ "Id": $chkbox.val(), "TypeItem": dropVal });
+                    }
+                }
+            });
+            $.ajax({
+                type: "Post",
+                contentType: "application/json;charset=utf-8",
+                url: "/Home/ShowData",
+                data: JSON.stringify(list),
+                datatype: "json",
+                success: function (data) {
+                    alert("Update Success!");
+                },
+                error: function (data) {
+                    alert("error");
+                }
+            });
+        }
+
+        $('#sendbtn').on('click', function () {
+            chk();
+        });
+    });
+</script>
+<h2>ShowData</h2>
+<h3>已被選的項目: @ViewData["UpdResult1"]</h3>
+
+<table>
+    <thead>
+        <tr>
+            <td>@Html.DisplayNameFor(m => m.testData_Chk_Droplist[0].Id)</td>
+            <td>@Html.DisplayNameFor(m => m.testData_Chk_Droplist[0].Names)</td>
+            <td>@Html.DisplayNameFor(m => m.testData_Chk_Droplist[0].Content)</td>
+            <td>@Html.DisplayNameFor(m => m.testData_Chk_Droplist[0].TypeItem)</td>
+        </tr>
+
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.testData_Chk_Droplist)
+        {
+            var typeitem = "TypeItem" + item.Id.ToString();
+            ViewData[typeitem] = item.TypeItem;
+
+            <tr>
+                <td>@Html.CheckBoxFor(m => m.Checked, new { value = item.Id, name = "checkbox" + item.Id })</td>
+                <td>@item.Id</td>
+                <td>@item.Names</td>
+                <td>@item.Content</td>
+                <td>@item.TypeItem</td>
+                <td>
+                    @Html.DropDownList(typeitem, Model.droplistItem, new { Id = "Type" + item.Id.ToString() })
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input id="sendbtn" type="submit" value="送出" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+
+

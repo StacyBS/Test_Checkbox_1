@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="MVCUseModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="droplistItem">
+          <Key>
+            <PropertyRef Name="TypeItem" />
+          </Key>
+          <Property Name="TypeItem" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="TypePath" Type="varchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="TestData_chk_droplist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Names" Type="varchar" MaxLength="10" />
+          <Property Name="Content" Type="varchar" MaxLength="10" />
+          <Property Name="TypeItem" Type="varchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_PersonOrder">
+          <End Role="droplistItem" Type="Self.droplistItem" Multiplicity="0..1" />
+          <End Role="TestData_chk_droplist" Type="Self.TestData_chk_droplist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="droplistItem">
+              <PropertyRef Name="TypeItem" />
+            </Principal>
+            <Dependent Role="TestData_chk_droplist">
+              <PropertyRef Name="TypeItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCUseModelStoreContainer">
+          <EntitySet Name="droplistItem" EntityType="Self.droplistItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TestData_chk_droplist" EntityType="Self.TestData_chk_droplist" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_PersonOrder" Association="Self.FK_PersonOrder">
+            <End Role="droplistItem" EntitySet="droplistItem" />
+            <End Role="TestData_chk_droplist" EntitySet="TestData_chk_droplist" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="MVCUseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="droplistItem">
+          <Key>
+            <PropertyRef Name="TypeItem" />
+          </Key>
+          <Property Name="TypeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="TypePath" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TestData_chk_droplist" Relationship="Self.FK_PersonOrder" FromRole="droplistItem" ToRole="TestData_chk_droplist" />
+        </EntityType>
+        <EntityType Name="TestData_chk_droplist">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Names" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Content" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="TypeItem" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="droplistItem" Relationship="Self.FK_PersonOrder" FromRole="TestData_chk_droplist" ToRole="droplistItem" />
+        </EntityType>
+        <Association Name="FK_PersonOrder">
+          <End Role="droplistItem" Type="Self.droplistItem" Multiplicity="0..1" />
+          <End Role="TestData_chk_droplist" Type="Self.TestData_chk_droplist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="droplistItem">
+              <PropertyRef Name="TypeItem" />
+            </Principal>
+            <Dependent Role="TestData_chk_droplist">
+              <PropertyRef Name="TypeItem" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="MVCUseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="droplistItem" EntityType="Self.droplistItem" />
+          <EntitySet Name="TestData_chk_droplist" EntityType="Self.TestData_chk_droplist" />
+          <AssociationSet Name="FK_PersonOrder" Association="Self.FK_PersonOrder">
+            <End Role="droplistItem" EntitySet="droplistItem" />
+            <End Role="TestData_chk_droplist" EntitySet="TestData_chk_droplist" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="MVCUseModelStoreContainer" CdmEntityContainer="MVCUseEntities">
+          <EntitySetMapping Name="droplistItem">
+            <EntityTypeMapping TypeName="MVCUseModel.droplistItem">
+              <MappingFragment StoreEntitySet="droplistItem">
+                <ScalarProperty Name="TypeItem" ColumnName="TypeItem" />
+                <ScalarProperty Name="TypePath" ColumnName="TypePath" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TestData_chk_droplist">
+            <EntityTypeMapping TypeName="MVCUseModel.TestData_chk_droplist">
+              <MappingFragment StoreEntitySet="TestData_chk_droplist">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Names" ColumnName="Names" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="TypeItem" ColumnName="TypeItem" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="無" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

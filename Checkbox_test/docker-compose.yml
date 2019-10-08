@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  checkbox_test:
+    image: checkbox_test
+    build:
+      context: .\Checkbox_test
+      dockerfile: Dockerfile
